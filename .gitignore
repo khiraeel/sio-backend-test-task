@@ -1,0 +1,14 @@
+# app
+/app/vendor
+/app/.env
+/app/*.lst
+/app/var/
+/app/bin/*
+/app/.env.local
+/app/config/secrets/prod/prod.decrypt.private.php
+/app/public/bundles/
+
+# idea
+/.idea
+.env.*.local
+compose.override.yaml
