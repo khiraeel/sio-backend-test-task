@@ -20,14 +20,14 @@ class Product
     #[ORM\Column(type: Types::STRING)]
     private string $name;
 
-    #[ORM\Column(type: Types::STRING)]
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private Price $price;
 
     public function __construct(
         string $name,
-        Price $price
+        string $price
     ) {
         $this->name = $name;
-        $this->price = $price;
+        $this->price = new Price($price);
     }
 }

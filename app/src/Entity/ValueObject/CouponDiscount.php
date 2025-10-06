@@ -4,15 +4,16 @@ namespace App\Entity\ValueObject;
 
 use App\Enum\CouponTypeEnum;
 use App\Exceptions\InvalidArgumentException;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Embeddable]
 class CouponDiscount
 {
-    #[ORM\Column(type: 'string', enumType: CouponTypeEnum::class)]
+    #[ORM\Column(type: Types::STRING, enumType: CouponTypeEnum::class)]
     private CouponTypeEnum $type;
 
-    #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private float $value;
 
     public function __construct(CouponTypeEnum $type, float $value)
@@ -23,6 +24,10 @@ class CouponDiscount
 
         $this->type = $type;
         $this->value = round($value, 1);
+    }
+    public function getType(): CouponTypeEnum
+    {
+        return $this->type;
     }
 
     public function getValue(): float
