@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Entity\ValueObject\CouponDiscount;
-use App\Enum\CouponTypeEnum;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Entity;
@@ -14,7 +15,11 @@ use Doctrine\ORM\Mapping\Table;
 class Coupon
 {
     #[ORM\Id]
-    #[ORM\Column(type: Types::STRING)]
+    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    private int $id;
+
+    #[ORM\Column(type: Types::STRING, unique: true)]
     private string $code;
 
     #[ORM\Column(type: Types::STRING)]
@@ -31,5 +36,25 @@ class Coupon
         $this->code = $code;
         $this->name = $name;
         $this->discount = $discount;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getCode(): string
+    {
+        return $this->code;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getDiscount(): CouponDiscount
+    {
+        return $this->discount;
     }
 }

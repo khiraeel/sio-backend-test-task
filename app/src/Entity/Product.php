@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Entity\ValueObject\Price;
@@ -20,14 +22,29 @@ class Product
     #[ORM\Column(type: Types::STRING)]
     private string $name;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
+    #[ORM\Embedded(class: Price::class)]
     private Price $price;
 
     public function __construct(
         string $name,
-        string $price
+        Price $price
     ) {
         $this->name = $name;
-        $this->price = new Price($price);
+        $this->price = $price;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getPrice(): Price
+    {
+        return $this->price;
     }
 }
