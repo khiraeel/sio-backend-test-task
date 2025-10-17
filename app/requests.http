@@ -1,22 +1,124 @@
-### Calculate Price
+### 1. Calculate price — без купона (Германия, iPhone)
 POST http://127.0.0.1:8337/calculate-price
 Accept: application/json
 Content-Type: application/json
 
 {
-  "product": 1,
-  "taxNumber": "DE123456789",
-  "couponCode": "D15"
+    "product": 1,
+    "taxNumber": "DE123456789",
+    "couponCode": ""
 }
 
-### Execute Purchase
+### 2. Calculate price — процентная скидка 10%
+POST http://127.0.0.1:8337/calculate-price
+Accept: application/json
+Content-Type: application/json
+
+{
+    "product": 1,
+    "taxNumber": "FRAB123456789",
+    "couponCode": "P10"
+}
+
+### 3. Calculate price — процентная скидка 50%
+POST http://127.0.0.1:8337/calculate-price
+Accept: application/json
+Content-Type: application/json
+
+{
+    "product": 2,
+    "taxNumber": "IT12345678900",
+    "couponCode": "P50"
+}
+
+### 4. Calculate price — 100% скидка (нулевая цена)
+POST http://127.0.0.1:8337/calculate-price
+Accept: application/json
+Content-Type: application/json
+
+{
+    "product": 3,
+    "taxNumber": "GR123456789",
+    "couponCode": "P100"
+}
+
+### 5. Calculate price — фиксированная скидка 25 EUR
+POST http://127.0.0.1:8337/calculate-price
+Accept: application/json
+Content-Type: application/json
+
+{
+    "product": 1,
+    "taxNumber": "DE123456789",
+    "couponCode": "D25"
+}
+
+### 6. Calculate price — фиксированная скидка 75 EUR
+POST http://127.0.0.1:8337/calculate-price
+Accept: application/json
+Content-Type: application/json
+
+{
+    "product": 2,
+    "taxNumber": "FRAA123456789",
+    "couponCode": "D75"
+}
+
+### 7. Calculate price — фиксированная скидка больше, чем цена
+POST http://127.0.0.1:8337/calculate-price
+Accept: application/json
+Content-Type: application/json
+
+{
+    "product": 3,
+    "taxNumber": "DE123456789",
+    "couponCode": "D500"
+}
+
+### 8. Execute purchase — PayPal (успешный платеж)
 POST http://127.0.0.1:8337/purchase
 Accept: application/json
 Content-Type: application/json
 
 {
-  "product": 1,
-  "taxNumber": "IT12345678900",
-  "couponCode": "D15",
-  "paymentProcessor": "paypal"
+    "product": 1,
+    "taxNumber": "IT12345678900",
+    "couponCode": "P10",
+    "paymentProcessor": "paypal"
+}
+
+### 9. Execute purchase — Stripe (успешный платеж)
+POST http://127.0.0.1:8337/purchase
+Accept: application/json
+Content-Type: application/json
+
+{
+    "product": 2,
+    "taxNumber": "FRBB123456789",
+    "couponCode": "D25",
+    "paymentProcessor": "stripe"
+}
+
+### 10. Execute purchase — ошибка оплаты Stripe (цена < 100)
+POST http://127.0.0.1:8337/purchase
+Accept: application/json
+Content-Type: application/json
+
+{
+    "product": 3,
+    "taxNumber": "DE123456789",
+    "couponCode": "P10",
+    "paymentProcessor": "stripe"
+}
+
+### 11. Execute purchase — ошибка PayPal (цена > 100000)
+POST http://127.0.0.1:8337/purchase
+Accept: application/json
+Content-Type: application/json
+
+{
+    "product": 1,
+    "taxNumber": "DE123456789",
+    "couponCode": "D500",
+    "paymentProcessor": "paypal"
 }

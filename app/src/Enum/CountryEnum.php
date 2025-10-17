@@ -6,8 +6,8 @@ namespace App\Enum;
 
 enum CountryEnum: string
 {
-    case GERMANY = 'de';
-    case ITALY = 'it';
-    case FRANCE = 'fr';
-    case GREECE = 'gr';
+    case GERMANY = 'DE';
+    case ITALY = 'IT';
+    case FRANCE = 'FR';
+    case GREECE = 'GR';
 }

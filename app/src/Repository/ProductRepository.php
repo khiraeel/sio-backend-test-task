@@ -17,6 +17,11 @@ class ProductRepository
         $this->repo = $this->entityManager->getRepository(Product::class);
     }
 
+    public function getById(int $id): ?Product
+    {
+        return $this->repo->find($id);
+    }
+
     public function findAll(): array
     {
         return $this->repo->findAll();

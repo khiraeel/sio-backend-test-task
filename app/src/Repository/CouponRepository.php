@@ -17,6 +17,11 @@ class CouponRepository
         $this->repo = $this->entityManager->getRepository(Coupon::class);
     }
 
+    public function getByCode(string $code): ?Coupon
+    {
+        return $this->repo->findOneBy(['code' => $code]);
+    }
+
     public function findAll(): array
     {
         return $this->repo->findAll();

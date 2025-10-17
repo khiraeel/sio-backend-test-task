@@ -9,6 +9,7 @@ use App\Enum\CouponTypeEnum as EnumCouponType;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use InvalidArgumentException;
+use Money\Money;
 
 #[ORM\Embeddable]
 class CouponDiscount
@@ -55,6 +56,21 @@ class CouponDiscount
     public function getValue(): string|float
     {
         return $this->type === EnumCouponType::PERCENT ? $this->percentValue : $this->getMoneyValue();
+    }
+
+    public function getValueBySum(Money $sum): Money
+    {
+        if($this->type === EnumCouponType::FIXED) {
+            return $this->fixedValue->getMoney();
+        }
+
+        $percentUnit = $this->getPercentUnit($sum);
+        return $percentUnit->multiply( (string)$this->percentValue );
+    }
+
+    public function getPercentUnit(Money $money): Money
+    {
+        return $money->divide(100);
     }
 
     public function getMoneyValue(): ?string

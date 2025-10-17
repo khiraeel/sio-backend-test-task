@@ -28,6 +28,11 @@ abstract class BaseController extends AbstractController
         return $this->json($data, Response::HTTP_BAD_REQUEST);
     }
 
+    public function createHttpUnprocessableEntity(mixed $data): JsonResponse
+    {
+        return $this->json($data, Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
     public function createResponseHttpConflict(mixed $data): JsonResponse
     {
         return $this->json($data, Response::HTTP_CONFLICT);
