@@ -25,14 +25,12 @@ class CouponDiscount
 
     public function __construct(EnumCouponType $type, Price|float $value)
     {
-        if ($this->isTypePercent($type)) {
-            if ($this->isValidPercentValue($value)) {
-                $this->percentValue = $value;
-            } else {
-                throw new InvalidArgumentException('Percentage discount must be between 0 and 100');
-            }
-        } elseif($value instanceof Price) {
+        if($value instanceof Price) {
             $this->fixedValue = $value;
+        } else if ($this->isTypePercent($type) && $this->isValidPercentValue($value) ) {
+            $this->percentValue = $value;
+        } else {
+            throw new InvalidArgumentException('Percentage discount must be between 0 and 100');
         }
 
         $this->type = $type;

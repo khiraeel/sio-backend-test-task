@@ -26,21 +26,16 @@ class CouponFixtures extends Fixture
         ];
 
         foreach ($coupons as $data) {
-            try {
-                $coupon = new Coupon(
-                    $data['code'],
-                    $data['name'],
-                    new CouponDiscount(
-                        $data['discount_type'],
-                        $data['discount_value']),
-                );
+            $coupon = new Coupon(
+                $data['code'],
+                $data['name'],
+                new CouponDiscount(
+                    $data['discount_type'],
+                    $data['discount_value']),
+            );
 
-                $manager->persist($coupon);
+            $manager->persist($coupon);
 
-                //dump($coupon);
-            } catch (Throwable $e) {
-                dd($e->getMessage());
-            }
         }
 
         $manager->flush();

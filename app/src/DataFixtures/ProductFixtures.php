@@ -24,7 +24,6 @@ class ProductFixtures extends Fixture
                 $data['name'],
                 $data['price']
             );
-            //dump($product);
             $manager->persist($product);
         }
 
